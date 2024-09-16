@@ -3,3 +3,4 @@ This is a markdown file, generally the readme.md file in a repository tells any 
 
 - I set up GitHub and Codio 
 - I have joined my group GitHub classroom 
+- i have started and tested my Codio server
