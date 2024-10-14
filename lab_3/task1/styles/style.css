@@ -1,0 +1,59 @@
+body {
+    margin: auto;
+    width: 80%;
+}
+
+header, section, article, nav, aside, footer, div {
+    font-family: sans-serif;
+    border: 1px dotted #000;
+    padding: 10px;
+    margin: 10px;
+}
+
+.BlogPost {
+    background-color: rgb(68, 149, 255);
+}
+
+#siteLogo {
+    border: 1px solid #000;
+    float: left;
+    width: 25%;
+    margin: 20px;
+    height: 50px;
+}
+
+#SiteTitle {
+    width: 65%;
+    float: right;
+    border: 1px solid #000;
+    height: 50px;
+    margin-right: 20px;
+}
+
+#title {
+    height: 100px;
+}
+
+#SiteNavigation {
+    height: 100px;
+}
+
+li {
+    width: 25%;
+    float: left;
+    margin: 4%;
+    border: 1px solid #000;
+    list-style: none;
+    height: 20px;
+}
+
+#MainImage {
+    width: 75%;
+    height: 300px;
+    margin: 10px;
+}
+
+#ImageDetials {
+    width: 55%;
+    height: 50px;
+}

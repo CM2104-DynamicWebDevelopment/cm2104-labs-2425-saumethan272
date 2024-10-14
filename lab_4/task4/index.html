@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Moggybook Registration</title>
+    <script>
+        function registerUser(form) {
+            // Get form element values
+            var username = form.username.value;
+            var breed = form.breed.value;
+            var email = form.email.value;
+            var homepage = form.homepage.value;
+            var dateOfBirth = form.dateOfBirth.value;
+            var about = form.about.value;
+
+            // Display entered values in an alert
+            alert("You entered:\n\nUsername: " + username + "\nBreed: " + breed + "\nEmail: " + email + "\nHomepage: " + homepage + "\nDate of Birth: " + dateOfBirth + "\nAbout: " + about);
+        }
+    </script>
+</head>
+
+<body>
+    <h1>Moggybook Registration</h1>
+    <form onsubmit="return false;"> <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+
+        <label for="breed">Breed:</label>
+        <input type="text" id="breed" name="breed" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="homepage">Homepage:</label>
+        <input type="url" id="homepage" name="homepage"><br>
+
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" name="dateOfBirth" required><br>
+
+        <label for="about">About:</label>
+        <textarea id="about" name="about"></textarea><br>
+
+        <button type="button" onclick="registerUser(this.form)">Register</button>
+    </form>
+</body>
+
+</html>
