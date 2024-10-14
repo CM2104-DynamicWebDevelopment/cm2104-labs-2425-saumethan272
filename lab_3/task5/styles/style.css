@@ -1,0 +1,59 @@
+* {
+    border: 1px solid black;
+}
+
+body {
+    width: 960px;
+    margin: auto;
+}
+
+nav ul {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+aside {
+    flex-direction: column;
+}
+
+#comments {
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#content {
+    flex-direction: row;
+}
+
+#image-container {
+    flex-direction: column;
+}
+
+#thumbnails {
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.header {
+    flex-direction: row;
+}
+
+.header h1 {
+    padding: 20px;
+}
+
+.row {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.image-thumbnail {
+    padding-left: 5px;
+    padding-right: 5px;
+}
