@@ -30,6 +30,13 @@ spotifyApi.clientCredentialsGrant().then(
     }
 );
 
+
+// Route for love in tracks, artists and albums
+app.get("/searchlove", function (req, res) {
+    getTracks("love", res);
+});
+
+
 async function getTracks(searchterm, res) {
     spotifyApi.searchTracks(searchterm)
     .then(function (data) {
@@ -61,11 +68,6 @@ async function getTracks(searchterm, res) {
     });
 }
 
-
-// Route for love in tracks, artists and albums
-app.get("/searchlove", function (req, res) {
-    getTracks("love", res);
-});
 
 
 app.listen(8080)
