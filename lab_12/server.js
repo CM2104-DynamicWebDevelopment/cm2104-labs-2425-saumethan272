@@ -45,12 +45,6 @@ app.get("/search", function (req, res) {
 
 
 async function getTracks(searchterm, res) {
-    spotifyApi.searchTracks(searchterm)
-    .then(function (data) {
-        res.send(JSON.stringify(data.body));
-    }, function (err) {
-        console.error(err);
-    });
 
     spotifyApi.searchTracks(searchterm).then(function (data) {
         var tracks = data.body.tracks.items
