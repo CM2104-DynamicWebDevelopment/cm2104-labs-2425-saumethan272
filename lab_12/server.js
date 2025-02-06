@@ -36,6 +36,13 @@ app.get("/searchlove", function (req, res) {
     getTracks("love", res);
 });
 
+// Route for serching in tracks, artists and albums
+app.get("/search", function (req, res) {
+    var searchterm = req.query.searchterm;
+    getTracks(searchterm, res);
+});
+
+
 
 async function getTracks(searchterm, res) {
     spotifyApi.searchTracks(searchterm)
