@@ -8,7 +8,7 @@ app.get("/", function(req, res) {
 })
 var spotifyApi = new SpotifyWebApi({
     clientId: "6c147d1edb16457cbce816d434b50dd3",
-    ClientSecret: "6a0dbcf0ba864168b228689c2af0fcdc"
+    clientSecret: "6a0dbcf0ba864168b228689c2af0fcdc"
 })
 
 // Retrive an acces token 
