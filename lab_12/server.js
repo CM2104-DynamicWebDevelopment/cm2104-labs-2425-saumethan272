@@ -6,9 +6,6 @@ app.use(express.static("public"))
 app.get("/", function(req, res) {
     res.send("Hello world by express")
 })
-
-app.listen(8080)
-
 var spotifyApi = new SpotifyWebApi({
     clientId: "6c147d1edb16457cbce816d434b50dd3",
     ClientSecret: "6a0dbcf0ba864168b228689c2af0fcdc"
@@ -45,3 +42,5 @@ async function getTracks(searchterm, res) {
 app.get("/searchlove", function (req, res) {
     getTracks("love", res);
 });
+
+app.listen(8080)
