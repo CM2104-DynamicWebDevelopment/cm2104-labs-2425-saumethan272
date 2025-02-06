@@ -40,7 +40,7 @@ async function getTracks(searchterm, res) {
 
     spotifyApi.searchTracks(searchterm).then(function (data) {
         var tracks = data.body.tracks.items
-        var HTMLResponce = "";
+        var HTMLResponse = "";
 
         for(var i=0; i<tracks.length; i++){
             var track = tracks[i];
@@ -53,9 +53,9 @@ async function getTracks(searchterm, res) {
                         <img src='${track.album.images[0].url}'>
                         <a href='${track.external_urls.spotify}'>Track Details</a>
                     </div>`;
-            console.log(HTMLResponce);
+            console.log(HTMLResponse);
         }
-        res.send(HTMLResponce)
+        res.send(HTMLResponse)
     }, function (err) {
         console.error(err);
     });
