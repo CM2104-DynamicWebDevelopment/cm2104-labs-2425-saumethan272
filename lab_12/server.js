@@ -112,6 +112,7 @@ async function getTopTracks(artistId, res) {
 }
 
 async function getRelated(artistId, res) {
+    console.log("Artist ID:", artistId);  // Log the artist ID to check if it's valid
     spotifyApi.getArtistRelatedArtists(artistId)
         .then(function (data) {
             var artists = data.body.artists;
@@ -133,6 +134,7 @@ async function getRelated(artistId, res) {
             res.send("Error fetching related artists");
         });
 }
+
 
 
 app.listen(8080)
