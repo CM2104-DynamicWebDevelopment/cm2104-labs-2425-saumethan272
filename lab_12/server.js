@@ -3,6 +3,7 @@ var app = express();
 var SpotifyWebApi = require("spotify-web-api-node");
 
 app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
 
 app.get("/", function (req, res) {
     res.sendFile(__dirname + "/public/form.html");
