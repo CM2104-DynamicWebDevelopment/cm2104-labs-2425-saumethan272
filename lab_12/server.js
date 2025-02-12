@@ -2,8 +2,7 @@ var express = require("express");
 var app = express();
 var SpotifyWebApi = require("spotify-web-api-node");
 
-app.use(express.static("public"))
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 
 app.get("/", function(req, res) {
     res.send("Hello world express")
