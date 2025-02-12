@@ -40,7 +40,7 @@ app.get("/searchlove", function (req, res) {
 // Route for serching in tracks, artists and albums
 app.get("/search", function (req, res) {
     var searchterm = req.query.searchterm;
-    getTracks(searchterm, res);
+    getTopTracks(searchterm, res);
 });
 
 // Route for handling form submission
@@ -69,6 +69,15 @@ async function getTracks(searchterm, res) {
         res.send(HTMLResponse)
     }, function (err) {
         console.error(err);
+    });
+}
+
+async function getTopTracks(artist, res) {
+    spotifyApi.getArtistTopTracks(artist,'GB')
+    .then(function (data) {
+        console.log(data.body);
+    }, function (err) {
+        console.log('Something went wrong!', err);
     });
 }
 
