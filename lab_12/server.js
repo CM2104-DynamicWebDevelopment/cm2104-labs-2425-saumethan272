@@ -48,6 +48,11 @@ app.get("/toptracks/:artistId", function (req, res) {
     getTopTracks(artistId, res);
 });
 
+app.get("/related/:artistId", function (req, res) {
+    var artistId = req.params.artistId;
+    getRelated(artistId, res);
+});
+
 // Route for handling form submission
 app.post("/postform", function (req, res) {
     var searchTerm = req.body.searchTerm;
@@ -62,6 +67,7 @@ async function getTracks(searchterm, res) {
         for (var i = 0; i < tracks.length; i++) {
             var track = tracks[i];
             var artistId = track.artists[0].id; // Get artist ID
+
             HTMLResponse += `
                 <div>
                     <h2>${track.name}</h2>
@@ -69,7 +75,9 @@ async function getTracks(searchterm, res) {
                     <img src='${track.album.images[0].url}' width="200">
                     <a href='${track.external_urls.spotify}'>Track Details</a>
                     <br>
-                    <a href='/toptracks/${artistId}'>View Top Tracks</a> <!-- Add Top Tracks Link -->
+                    <a href='/toptracks/${artistId}'>View Top Tracks</a> <!-- Link to Top Tracks -->
+                    <br>
+                    <a href='/related/${artistId}'>View Related Artists</a> <!-- Link to Related Artists -->
                 </div>`;
         }
         res.send(HTMLResponse);
@@ -100,6 +108,29 @@ async function getTopTracks(artistId, res) {
         .catch(function (err) {
             console.log('Something went wrong!', err);
             res.send("Error fetching top tracks");
+        });
+}
+
+async function getRelated(artistId, res) {
+    spotifyApi.getArtistRelatedArtists(artistId)
+        .then(function (data) {
+            var artists = data.body.artists;
+            var HTMLResponse = "<h1>Related Artists</h1>";
+
+            for (var i = 0; i < artists.length; i++) {
+                var artist = artists[i];
+                HTMLResponse += `
+                    <div>
+                        <h2>${artist.name}</h2>
+                        <img src='${artist.images.length > 0 ? artist.images[0].url : "https://via.placeholder.com/200"}' width="200">
+                        <a href='/toptracks/${artist.id}'>View Top Tracks</a>
+                    </div>`;
+            }
+            res.send(HTMLResponse);
+        })
+        .catch(function (err) {
+            console.log('Something went wrong!', err);
+            res.send("Error fetching related artists");
         });
 }
 
