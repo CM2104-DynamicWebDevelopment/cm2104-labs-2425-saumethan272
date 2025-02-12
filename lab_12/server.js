@@ -43,6 +43,11 @@ app.get("/search", function (req, res) {
     getTracks(searchterm, res);
 });
 
+app.get("/toptracks/:artistId", function (req, res) {
+    var artistId = req.params.artistId;
+    getTopTracks(artistId, res);
+});
+
 // Route for handling form submission
 app.post("/postform", function (req, res) {
     var searchTerm = req.body.searchTerm;
@@ -50,35 +55,52 @@ app.post("/postform", function (req, res) {
 });
 
 async function getTracks(searchterm, res) {
-
     spotifyApi.searchTracks(searchterm).then(function (data) {
-        var tracks = data.body.tracks.items
-        var HTMLResponse = "";
-        for(var i=0; i<tracks.length; i++){
+        var tracks = data.body.tracks.items;
+        var HTMLResponse = "<h1>Search Results</h1>";
+
+        for (var i = 0; i < tracks.length; i++) {
             var track = tracks[i];
-            console.log(track.name);
+            var artistId = track.artists[0].id; // Get artist ID
             HTMLResponse += `
-                    <div>
-                        <h2>${track.name}</h2>
-                        <h4>${track.artists[0].name}</h4>
-                        <img src='${track.album.images[0].url}'>
-                        <a href='${track.external_urls.spotify}'>Track Details</a>
-                    </div>`;
-            console.log(HTMLResponse);
+                <div>
+                    <h2>${track.name}</h2>
+                    <h4>${track.artists[0].name}</h4>
+                    <img src='${track.album.images[0].url}' width="200">
+                    <a href='${track.external_urls.spotify}'>Track Details</a>
+                    <br>
+                    <a href='/toptracks/${artistId}'>View Top Tracks</a> <!-- Add Top Tracks Link -->
+                </div>`;
         }
-        res.send(HTMLResponse)
+        res.send(HTMLResponse);
     }, function (err) {
         console.error(err);
+        res.send("Error retrieving search results");
     });
 }
 
-async function getTopTracks(artist, res) {
-    spotifyApi.getArtistTopTracks(artist,'GB')
-    .then(function (data) {
-        console.log(data.body);
-    }, function (err) {
-        console.log('Something went wrong!', err);
-    });
+async function getTopTracks(artistId, res) {
+    spotifyApi.getArtistTopTracks(artistId, 'GB')
+        .then(function (data) {
+            var tracks = data.body.tracks;
+            var HTMLResponse = "<h1>Top Tracks</h1>";
+            
+            for (var i = 0; i < tracks.length; i++) {
+                var track = tracks[i];
+                HTMLResponse += `
+                    <div>
+                        <h2>${track.name}</h2>
+                        <h4>Album: ${track.album.name}</h4>
+                        <img src='${track.album.images[0].url}' width="200">
+                        <a href='${track.external_urls.spotify}'>Listen on Spotify</a>
+                    </div>`;
+            }
+            res.send(HTMLResponse);
+        })
+        .catch(function (err) {
+            console.log('Something went wrong!', err);
+            res.send("Error fetching top tracks");
+        });
 }
 
 
