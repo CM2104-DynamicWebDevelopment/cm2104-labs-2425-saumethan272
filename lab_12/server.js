@@ -3,6 +3,7 @@ var app = express();
 var SpotifyWebApi = require("spotify-web-api-node");
 
 app.use(express.static("public"))
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", function(req, res) {
     res.send("Hello world express")
@@ -30,7 +31,6 @@ spotifyApi.clientCredentialsGrant().then(
     }
 );
 
-
 // Route for love in tracks, artists and albums
 app.get("/searchlove", function (req, res) {
     getTracks("love", res);
@@ -42,7 +42,11 @@ app.get("/search", function (req, res) {
     getTracks(searchterm, res);
 });
 
-
+// Route for handling form submission
+app.post("/postform", function (req, res) {
+    var searchTerm = req.body.searchTerm;
+    getTracks(searchTerm, res);
+});
 
 async function getTracks(searchterm, res) {
 
@@ -66,5 +70,6 @@ async function getTracks(searchterm, res) {
         console.error(err);
     });
 }
+
 
 app.listen(8080)
