@@ -4,9 +4,9 @@ var SpotifyWebApi = require("spotify-web-api-node");
 
 app.use(express.static("public"))
 
-app.get("/", function(req, res) {
-    res.send("Hello world express")
-})
+// app.get("/", function(req, res) {
+//     res.send("Hello world express")
+// })
 
 var spotifyApi = new SpotifyWebApi({
     clientId: "6c147d1edb16457cbce816d434b50dd3",
@@ -45,28 +45,46 @@ app.get("/search", function (req, res) {
 
 
 async function getTracks(searchterm, res) {
+    spotifyApi.searchTracks(searchterm).then(function(data) {
+        var tracks = data.body.tracks.items;
+        var HTMLResponse = `
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Results for ${searchterm}</title>
+                <style>
+                    body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+                    .track { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+                    img { max-width: 200px; margin-top: 10px; }
+                    a { display: block; margin-top: 10px; color: #1DB954; }
+                    .back-link { margin-top: 20px; }
+                </style>
+            </head>
+            <body>
+                <h1>Results for "${searchterm}"</h1>
+                <a href="/" class="back-link">← New Search</a>
+        `;
 
-    spotifyApi.searchTracks(searchterm).then(function (data) {
-        var tracks = data.body.tracks.items
-        var HTMLResponse = "";
-
-        for(var i=0; i<tracks.length; i++){
+        for (var i = 0; i < tracks.length; i++) {
             var track = tracks[i];
-            console.log(track.name);
-
             HTMLResponse += `
-                    <div>
-                        <h2>${track.name}</h2>
-                        <h4>${track.artists[0].name}</h4>
-                        <img src='${track.album.images[0].url}'>
-                        <a href='${track.external_urls.spotify}'>Track Details</a>
-                    </div>`;
-            console.log(HTMLResponse);
+                <div class="track">
+                    <h2>${track.name}</h2>
+                    <h4>Artist: ${track.artists[0].name}</h4>
+                    <h4>Album: ${track.album.name}</h4>
+                    <img src='${track.album.images[0].url}'>
+                    <a href='${track.external_urls.spotify}'>Listen on Spotify</a>
+                </div>
+            `;
         }
-        res.send(HTMLResponse)
-    }, function (err) {
+
+        HTMLResponse += `</body></html>`;
+        res.send(HTMLResponse);
+    }, function(err) {
         console.error(err);
+        res.status(500).send("Error searching tracks");
     });
 }
+
 
 app.listen(8080)
