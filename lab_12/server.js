@@ -40,7 +40,7 @@ app.get("/searchlove", function (req, res) {
 // Route for serching in tracks, artists and albums
 app.get("/search", function (req, res) {
     var searchterm = req.query.searchterm;
-    getTopTracks(searchterm, res);
+    getTracks(searchterm, res);
 });
 
 // Route for handling form submission
