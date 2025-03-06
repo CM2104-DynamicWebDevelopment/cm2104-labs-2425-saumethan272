@@ -1,0 +1,73 @@
+<!-- views/pages/about.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head')%>
+</head>
+
+<body class="container">
+
+  <header>
+    <%- include('../partials/header')%>
+  </header>
+
+  <main>
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="jumbotron">
+          <!-- Page to display a single profile. The "user" object is passed through from express -->
+          <!-- get the first name -->
+          <h1>Hi <%= user.name.first %></h1>
+          <!-- get the medium picture -->
+          <img src="<%= user.picture.medium %>" class="img-circle" />
+          <!-- get the username -->
+          <h2>username: <%= user.login.username %></h2>
+          <p>
+            <!-- get the gender-->
+            gender: <%= user.gender %>
+          </p>
+          <p>
+            <!-- get the dob -->
+            date of birth: <%= user.dob %>
+          </p>
+          <p>
+            <!-- get the registration date-->
+            date of registration: <%= user.registered %>
+          </p>
+        </div>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="well">
+          <h3>Details</h3>
+          <h3>Address</h3>
+          <ul>
+            <!-- get the componemts of the address-->
+            <li class="list-group-item">
+              <%= user.location.street %>
+            </li>
+            <li class="list-group-item">
+              <%= user.location.city%>
+            </li>
+            <li class="list-group-item">
+              <%= user.location.state %>
+            </li>
+            <li class="list-group-item">
+              <%= user.location.postcode %>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <%- include('../partials/footer')%>
+  </footer>
+
+</body>
+
+</html>
