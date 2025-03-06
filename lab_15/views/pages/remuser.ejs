@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<header>
+  <%- include('../partials/head')%>
+</header>
+
+
+<body class="container">
+    <header>
+      <%- include('../partials/header')%>
+    </header>
+
+  <main>
+    <div class="jumbotron">
+      <!-- simple form to remove a user via their username-->
+      <h3>Delete a User</h3>
+      <form action="/delete" method="POST">
+        <input type="text" placeholder="username" name="username">
+        <button type="submit">Submit</button>
+      </form>
+
+    </div>
+  </main>
+
+
+  <footer>
+    <%- include('../partials/footer')%>
+  </footer>
+
+</body>
+
+</html>
