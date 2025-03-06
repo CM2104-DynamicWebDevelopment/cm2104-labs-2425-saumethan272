@@ -53,19 +53,28 @@ async function connectDB() {
 //********** GET ROUTES - Deal with displaying pages ***************************
 
 //this is our root route
+//this is our root route
 app.get('/', function(req, res) {
   //if the user is not logged in redirect them to the login page
   if(!req.session.loggedin){res.redirect('/login');return;}
-
-  //otherwise perfrom a search to return all the documents in the people collection
-  db.collection('people').find().toArray(function(err, result) {
+  
+  // Get the logged in username from the session
+  var loggedInUsername = req.session.username;
+  
+  // First, find the logged in user
+  db.collection('people').findOne({"login.username": loggedInUsername}, function(err, loggedInUser) {
     if (err) throw err;
-    //the result of the query is sent to the users page as the "users" array
-    res.render('pages/users', {
-      users: result
-    })
+    
+    //otherwise perfrom a search to return all the documents in the people collection
+    db.collection('people').find().toArray(function(err, result) {
+      if (err) throw err;
+      //the result of the query is sent to the users page as the "users" array
+      res.render('pages/users', {
+        users: result,
+        user: loggedInUser  // Pass the logged in user to the template
+      })
+    });
   });
-
 });
 
 //this is our login route, all it does is render the login.ejs page.
@@ -118,25 +127,22 @@ app.get('/logout', function(req, res) {
 
 //the dologin route detasl with the data from the login screen.
 //the post variables, username and password ceom from the form on the login page.
+//the dologin route detasl with the data from the login screen.
 app.post('/dologin', function(req, res) {
   console.log(JSON.stringify(req.body))
   var uname = req.body.username;
   var pword = req.body.password;
 
-
-
   db.collection('people').findOne({"login.username":uname}, function(err, result) {
     if (err) throw err;
 
-
     if(!result){res.redirect('/login');return}
 
-
-
-    if(result.login.password == pword){ req.session.loggedin = true; res.redirect('/') }
-
-
-
+    if(result.login.password == pword){ 
+      req.session.loggedin = true; 
+      req.session.username = uname;  
+      res.redirect('/') 
+    }
     else{res.redirect('/login')}
   });
 });
